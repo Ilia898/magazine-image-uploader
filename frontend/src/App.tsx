@@ -1,8 +1,9 @@
 function App() {
   return (
     <>
-      <div className="text-red-400">
-        <h1>test {import.meta.env.VITE_TEST}</h1>
+      <div className="w-screen h-screen overflow-hidden bg-slate-200">
+        <div className="w-96 h-96 bg-bgreenPrimery rounded-full"></div>
+        <div className="w-96 h-96 bg-yellowPrimery rounded-full"></div>
       </div>
     </>
   );

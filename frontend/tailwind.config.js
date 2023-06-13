@@ -3,19 +3,20 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      "phone": "576px",
-      "tablet": "744px",
-      "desktop": "1280px",
+      phone: "576px",
+      tablet: "744px",
+      desktop: "1280px",
     },
 
     colors: {
-      'braunPrimery': '#F5890D',
-      'redPrimery': '#EA512E',
-      'yellowPrimery': '#FFC315',
-      'bgreenPrimery': '#80C282',
-      'gray': '#808080',
-      'gerylight': '#D1D1D1',
-      'text': '#464646',
+      braunPrimery: "#F5890D",
+      redPrimery: "#EA512E",
+      yellowPrimery: "#FFC315",
+      bgreenPrimery: "#80C282",
+      gray: "#808080",
+      gerylight: "#D1D1D1",
+      text: "#464646",
+      "editor-back": "#DBDBDB",
     },
 
     fontFamily: {
