@@ -9,14 +9,15 @@ export default {
     },
 
     colors: {
-      "braunPrimery": "#F5890D",
-      "redPrimery": "#EA512E",
-      "yellowPrimery": "#FFC315",
-      "bgreenPrimery": "#80C282",
-      "gray": "#808080",
-      "gerylight": "#D1D1D1",
-      "text": "#464646",
-      "editor-back": "#DBDBDB",
+      'braunPrimery': '#F5890D',
+      'redPrimery': '#EA512E',
+      'yellowPrimery': '#FFC315',
+      'bgreenPrimery': '#80C282',
+      'gray': '#808080',
+      'gerylight': '#D1D1D1',
+      'text': '#464646',
+      'whiteText': '#FBFBFB',
+      'editor-back': '#DBDBDB',
     },
 
     fontFamily: {
