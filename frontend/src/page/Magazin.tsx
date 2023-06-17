@@ -1,9 +1,9 @@
 import { BiArrowBack, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { ButtonSave } from "../components/ButtonsComponent";
 import { useState } from "react";
-import images from "../assets/magazin page/page-1.png";
+import MagazinPages from "../components/magazinPages";
 
-function Magazinpage() {
+function Magazin() {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Array.from({ length: 60 }, (_, i) => i + 1);
 
@@ -16,7 +16,9 @@ function Magazinpage() {
       <div className="flex justify-end my-4 cursor-pointer">
         <ButtonSave />
       </div>
-      <div className="h-[510px] bg-gray"></div>
+      <div className="h-[510px] bg-gray">
+        <MagazinPages />
+      </div>
       <div className="flex place-content-between bg-whiteText">
         <div className="">
           <BiChevronLeft size={40} />
@@ -40,4 +42,4 @@ function Magazinpage() {
   );
 }
 
-export default Magazinpage;
+export default Magazin;
