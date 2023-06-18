@@ -14,7 +14,7 @@ export default {
       'yellowPrimery': '#FFC315',
       'bgreenPrimery': '#80C282',
       'gray': '#808080',
-      'gerylight': '#D1D1D1',
+      'garylight': '#D1D1D1',
       'text': '#464646',
       'whiteText': '#FBFBFB',
       'editor-back': '#DBDBDB',
