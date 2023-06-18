@@ -1,4 +1,63 @@
-import image1 from './page-1.png'
+export { default as pageImg1 } from './page-1.png';
+export { default as pageImg2 } from './page-2.png';
+export { default as pageImg3 } from './page-3.png';
+export { default as pageImg4 } from './page-4.png';
+export { default as pageImg5 } from './page-5.png';
+export { default as pageImg6 } from './page-6.png';
+export { default as pageImg7 } from './page-7.png';
+export { default as pageImg8 } from './page-8.png';
+export { default as pageImg9 } from './page-9.png';
+export { default as pageImg10 } from './page-10.png';
+export { default as pageImg11 } from './page-11.png';
+export { default as pageImg12 } from './page-12.png';
+export { default as pageImg13 } from './page-13.png';
+export { default as pageImg14 } from './page-14.png';
+export { default as pageImg15 } from './page-15.png';
+export { default as pageImg16 } from './page-16.png';
+export { default as pageImg17 } from './page-17.png';
+export { default as pageImg18 } from './page-18.png';
+export { default as pageImg19 } from './page-19.png';
+export { default as pageImg20 } from './page-20.png';
+export { default as pageImg21 } from './page-21.png';
+export { default as pageImg22 } from './page-22.png';
+export { default as pageImg23 } from './page-23.png';
+export { default as pageImg24 } from './page-24.png';
+export { default as pageImg25 } from './page-25.png';
+export { default as pageImg26 } from './page-26.png';
+export { default as pageImg27 } from './page-27.png';
+export { default as pageImg28 } from './page-29.png';
+export { default as pageImg30 } from './page-30.png';
+export { default as pageImg31 } from './page-31.png';
+export { default as pageImg32 } from './page-32.png';
+export { default as pageImg33 } from './page-33.png';
+export { default as pageImg34 } from './page-34.png';
+export { default as pageImg35 } from './page-35.png';
+export { default as pageImg36 } from './page-36.png';
+export { default as pageImg37 } from './page-37.png';
+export { default as pageImg38 } from './page-38.png';
+export { default as pageImg39 } from './page-39.png';
+export { default as pageImg40 } from './page-40.png';
+export { default as pageImg41 } from './page-41.png';
+export { default as pageImg42 } from './page-42.png';
+export { default as pageImg43 } from './page-43.png';
+export { default as pageImg44 } from './page-44.png';
+export { default as pageImg45 } from './page-45.png';
+export { default as pageImg46 } from './page-46.png';
+export { default as pageImg47 } from './page-47.png';
+export { default as pageImg48 } from './page-48.png';
+export { default as pageImg49 } from './page-49.png';
+export { default as pageImg50 } from './page-50.png';
+export { default as pageImg51 } from './page-51.png';
+export { default as pageImg52 } from './page-52.png';
+export { default as pageImg53 } from './page-53.png';
+export { default as pageImg54 } from './page-54.png';
+export { default as pageImg55 } from './page-55.png';
+export { default as pageImg56 } from './page-56.png';
+export { default as pageImg57 } from './page-57.png';
+export { default as pageImg58 } from './page-58.png';
+export { default as pageImg59 } from './page-59.png';
+export { default as pageImg60 } from './page-60.png';
 
+// Continue for all of your images...
 
-export default image1
+  

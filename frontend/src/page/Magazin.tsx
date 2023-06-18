@@ -1,7 +1,7 @@
 import { BiArrowBack, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { ButtonSave } from "../components/ButtonsComponent";
 import { useState } from "react";
-import MagazinPages from "../components/magazinPages";
+import MagazinPages from "../components/MagazinPages";
 
 function Magazin() {
   const [currentPage, setCurrentPage] = useState(1);

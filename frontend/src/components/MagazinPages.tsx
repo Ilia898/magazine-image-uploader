@@ -1,12 +1,10 @@
-import imgPages from "../assets/magazinpage/imagePages.json";
-import image1 from "../assets/magazinpage/images";
+import * as pageImg from "../assets/magazinpage/images";
 
 function MagazinPages() {
-  console.log(imgPages);
   return (
     <div>
       <div>
-        <img src={imgPages[0]} alt="" />
+        <img src={pageImg.pageImg1} alt="page 1" />
       </div>
     </div>
   );
