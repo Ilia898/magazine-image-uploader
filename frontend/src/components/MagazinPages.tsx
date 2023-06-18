@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import * as imagesModule from "../assets/magazinpage/images";
 import { buttonsPerPage } from "../functions/imageCropButton";
+import { BiImage } from "react-icons/bi";
 
 interface ImagesModule {
   [key: string]: string;
@@ -29,18 +30,18 @@ const MagazinPages: React.FC<MagazinPagesProps> = ({ pageNumber }) => {
     const buttonsConfig = buttonsPerPage[page] || [];
     return buttonsConfig.map((config: ButtonConfig, index: number) => (
       <button className={config.cssClass} key={index}>
-        Button {index + 1}
+        Hochladen <BiImage size="25" />
       </button>
     ));
   };
 
   return (
-    <div className="flex space-x-4">
+    <div className="relative flex space-x-4">
       <div className="w-60">
         <img src={currentImage1} alt="page 1" />
         {renderButtons(pageNumber)}
       </div>
-      <div className="w-60">
+      <div className="relative w-60">
         <img src={currentImage2} alt="page 2" />
         {renderButtons(pageNumber + 1)}
       </div>
