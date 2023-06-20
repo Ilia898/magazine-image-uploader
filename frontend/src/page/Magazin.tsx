@@ -2,17 +2,19 @@ import { BiArrowBack, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { ButtonSave } from "../components/ButtonsComponent";
 import { useState } from "react";
 import MagazinPages from "../components/MagazinPages";
+import CropperDialog from "./CropperDialog";
 
-interface MagazinProps {
-  openButtonClick: () => void;
-}
-
-const Magazin: React.FC<MagazinProps> = ({ openButtonClick }) => {
+function Magazin() {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Array.from({ length: 60 }, (_, i) => i + 1);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-  const clickButton = () => {
-    openButtonClick;
+  const openButtonClick = () => {
+    setIsDialogVisible(true);
+  };
+
+  const closeButtonClick = () => {
+    setIsDialogVisible(false);
   };
 
   return (
@@ -28,7 +30,10 @@ const Magazin: React.FC<MagazinProps> = ({ openButtonClick }) => {
           </div>
         </div>
         <div className="flex h-[408px] justify-center items-center rounded-lg bg-gray">
-          <MagazinPages pageNumber={currentPage} openButtonTrue={clickButton} />
+          <MagazinPages
+            pageNumber={currentPage}
+            openButtonTrue={openButtonClick}
+          />
         </div>
         <div className="flex mt-4 space-x-4">
           <div>
@@ -66,8 +71,13 @@ const Magazin: React.FC<MagazinProps> = ({ openButtonClick }) => {
           </div>
         </div>
       </div>
+      {isDialogVisible && (
+        <div className="flex absolute h-full w-screen justify-center items-center bg-braunPrimery">
+          <CropperDialog closeButtonFalse={closeButtonClick} />
+        </div>
+      )}
     </>
   );
-};
+}
 
 export default Magazin;

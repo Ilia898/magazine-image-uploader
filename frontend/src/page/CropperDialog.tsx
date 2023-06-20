@@ -1,7 +1,11 @@
 import React from "react";
 
-function CropperDialog() {
-  return <div>CropperDialog Page</div>;
+interface MagazinPagesProps {
+  closeButtonFalse: () => void;
 }
+
+const CropperDialog: React.FC<MagazinPagesProps> = ({ closeButtonFalse }) => {
+  return <div onClick={closeButtonFalse}>CropperDialog Page</div>;
+};
 
 export default CropperDialog;

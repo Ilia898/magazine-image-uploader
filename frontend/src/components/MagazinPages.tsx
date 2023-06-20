@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import * as imagesModule from "../assets/magazinpage/images";
 import { buttonsPerPage } from "../functions/imageCropButton";
-import { BiImage } from "react-icons/bi";
 
 interface ImagesModule {
   [key: string]: string;
