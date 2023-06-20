@@ -9,6 +9,7 @@ interface ImagesModule {
 
 interface MagazinPagesProps {
   pageNumber: number;
+  openButtonTrue: () => void;
 }
 
 interface ButtonConfig {
@@ -17,7 +18,10 @@ interface ButtonConfig {
 
 const pageImg = imagesModule as ImagesModule;
 
-const MagazinPages: React.FC<MagazinPagesProps> = ({ pageNumber }) => {
+const MagazinPages: React.FC<MagazinPagesProps> = ({
+  pageNumber,
+  openButtonTrue,
+}) => {
   const [currentImage1, setCurrentImage1] = useState(pageImg.pageImg1);
   const [currentImage2, setCurrentImage2] = useState(pageImg.pageImg2);
 
@@ -29,8 +33,12 @@ const MagazinPages: React.FC<MagazinPagesProps> = ({ pageNumber }) => {
   const renderButtons = (page: number) => {
     const buttonsConfig = buttonsPerPage[page] || [];
     return buttonsConfig.map((config: ButtonConfig, index: number) => (
-      <button className={config.cssClass} key={index}>
-        Hochladen <BiImage size="25" />
+      <button className={config.cssClass} key={index} onClick={openButtonTrue}>
+        <div className="flex flex-col justify-center items-center rounded-md font-bold text-gray p-1 bg-whiteText bg-opacity-30 ">
+          Foto
+          <br />
+          hochladen
+        </div>
       </button>
     ));
   };
