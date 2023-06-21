@@ -17,7 +17,8 @@ export default {
       'garylight': '#D1D1D1',
       'text': '#464646',
       'whiteText': '#FBFBFB',
-      'editor-back': '#DBDBDB',
+      'editor-back': '#D9D9D9',
+      'cropperBg': '#C2C2C2D6'
     },
 
     fontFamily: {
