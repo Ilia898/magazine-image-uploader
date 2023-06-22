@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../functions/cropperUtils";
+import { CropperContext } from "../context/cropperContext";
 
 interface CroppedArea {
   x: number;
@@ -9,13 +10,26 @@ interface CroppedArea {
   height: number;
 }
 
-const ImageCropper = () => {
+interface ImageCropperProps {
+  deleteImg: boolean;
+  saveCroppedImage: boolean;
+  setDeleteImg: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowCroppedImage: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ImageCropper: React.FC<ImageCropperProps> = ({
+  deleteImg,
+  setDeleteImg,
+  saveCroppedImage,
+  setShowCroppedImage,
+}) => {
   const [imageSrc, setImageSrc] = React.useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const { setCroppedImgUrl } = useContext(CropperContext);
 
   const onCropComplete = useCallback(
     (croppedArea: CroppedArea, croppedAreaPixels: any) => {
@@ -32,14 +46,11 @@ const ImageCropper = () => {
       });
       console.log("donee", { croppedImage });
       setCroppedImage(croppedImage);
+      setCroppedImgUrl(croppedImage);
     } catch (e) {
       console.error(e);
     }
   }, [imageSrc, croppedAreaPixels]);
-
-  // const onClose = useCallback(() => {
-  //   setCroppedImage(null);
-  // }, []);
 
   const readFile = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -59,6 +70,22 @@ const ImageCropper = () => {
     }
   };
 
+  const onClose = useCallback(() => {
+    setCroppedImage(null);
+    setImageSrc(null);
+    console.log(setCroppedImage);
+  }, []);
+
+  useEffect(() => {
+    onClose();
+    setDeleteImg(false);
+  }, [deleteImg, setDeleteImg]);
+
+  useEffect(() => {
+    showCroppedImage();
+    setShowCroppedImage(false);
+  }, [saveCroppedImage]);
+
   return (
     <div>
       {imageSrc ? (
@@ -76,51 +103,6 @@ const ImageCropper = () => {
               onZoomChange={setZoom}
             />
           </div>
-          <div className="">
-            {/* <div className={classes.sliderContainer}>
-              <Typography
-                variant="overline"
-                classes={{ root: classes.sliderLabel }}
-              >
-                Zoom
-              </Typography>
-              <Slider
-                value={zoom}
-                min={1}
-                max={3}
-                step={0.1}
-                aria-labelledby="Zoom"
-                classes={{ root: classes.slider }}
-                onChange={(e, zoom) => setZoom(zoom)}
-              />
-            </div> */}
-            {/* <div className="">
-              <Typography
-                variant="overline"
-                classes={{ root: classes.sliderLabel }}
-              >
-                Rotation
-              </Typography>
-              <Slider
-                value={rotation}
-                min={0}
-                max={360}
-                step={1}
-                aria-labelledby="Rotation"
-                classes={{ root: classes.slider }}
-                onChange={(e, rotation) => setRotation(rotation)}
-              />
-            </div> */}
-            {/* <Button
-              onClick={showCroppedImage}
-              variant="contained"
-              color="primary"
-              classes=""
-            >
-              Show Result
-            </Button> */}
-          </div>
-          {/* <ImgDialog img={croppedImage} onClose={onClose} /> */}
         </>
       ) : (
         <input type="file" onChange={onFileChange} accept="image/*" />

@@ -4,7 +4,7 @@ interface cropperUtilsConfig {
     flip?: { horizontal: boolean; vertical: boolean; }; 
 }
 
-export const createImage = (url: string) =>
+export const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image()
     image.addEventListener('load', () => resolve(image))
@@ -29,57 +29,103 @@ export function rotateSize(width: number, height:number, rotation:number) {
   }
 
 
-export  const getCroppedImg = async (config: cropperUtilsConfig
-): Promise<string | null> => {
-    const { imageSrc, pixelCrop, flip = { horizontal: false, vertical: false } } = config;
-    if (imageSrc === null) {
-        return null;
-      }
+// export  const getCroppedImg = async (config: cropperUtilsConfig
+// ): Promise<string | null> => {
+//     const { imageSrc, pixelCrop, flip = { horizontal: false, vertical: false } } = config;
     
-    const image = await createImage(imageSrc)
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+//     if (imageSrc === null) {
+//         return null;
+//       }
+    
+//     const image = await createImage(imageSrc)
+//     const canvas = document.createElement('canvas')
+//     const ctx = canvas.getContext('2d')
   
-    // if (!ctx) {
-    //   return null
-    // }
+   
   
-    // const rotRad = getRadianAngle(rotation)
   
-    // // calculate bounding box of the rotated image
-    // // const { width: bBoxWidth, height: bBoxHeight } = rotateSize(
-    // //   image.width,
-    // //   image.height,
-    // //   rotation
-    // // )
+//     const croppedCanvas = document.createElement('canvas')
   
-    // // set canvas size to match the bounding box
-    // canvas.width = bBoxWidth
-    // canvas.height = bBoxHeight
+//     const croppedCtx = croppedCanvas.getContext('2d')
   
-    // // translate canvas context to a central location to allow rotating and flipping around the center
-    // ctx.translate(bBoxWidth / 2, bBoxHeight / 2)
-    // ctx.rotate(rotRad)
-    // ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1)
-    // ctx.translate(-image.width / 2, -image.height / 2)
+//     if (!croppedCtx) {
+//       return null
+//     }
   
-    // // draw rotated image
-    // ctx.drawImage(image, 0, 0)
+//     // Set the size of the cropped canvas
+//     croppedCanvas.width = pixelCrop.width
+//     croppedCanvas.height = pixelCrop.height
   
-    const croppedCanvas = document.createElement('canvas')
+//     // Draw the cropped image onto the new canvas
+//     croppedCtx.drawImage(
+//       canvas,
+//       pixelCrop.x,
+//       pixelCrop.y,
+//       pixelCrop.width,
+//       pixelCrop.height,
+//       0,
+//       0,
+//       pixelCrop.width,
+//       pixelCrop.height
+//     )
   
-    const croppedCtx = croppedCanvas.getContext('2d')
+//     // As Base64 string
+//  // return croppedCanvas.toDataURL('image/jpeg');
   
-    if (!croppedCtx) {
+//     // As a blob
+//     return new Promise<string>((resolve, reject) => {
+//         croppedCanvas.toBlob((file) => {
+//           if (file !== null) {
+//             resolve(URL.createObjectURL(file));
+//           } else {
+//             reject(new Error("Failed to create blob from image"));
+//           }
+//         }, 'image/jpeg');
+//     });
+  
+  
+//   }
+
+export const getCroppedImg = async (config: cropperUtilsConfig): Promise<string | null> => {
+  const { imageSrc, pixelCrop, flip = { horizontal: false, vertical: false } } = config;
+
+  if (imageSrc === null) {
+      return null;
+  }
+
+  const image = await createImage(imageSrc)
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  if (!ctx) {
+    throw new Error('Could not create 2D context for canvas');
+}
+
+
+  // Draw the image onto the canvas
+  canvas.width = image.width
+  canvas.height = image.height
+  ctx.drawImage(
+      image,
+      0,
+      0,
+      image.width,
+      image.height
+  )
+
+  const croppedCanvas = document.createElement('canvas')
+  const croppedCtx = croppedCanvas.getContext('2d')
+
+  if (!croppedCtx) {
       return null
-    }
-  
-    // Set the size of the cropped canvas
-    croppedCanvas.width = pixelCrop.width
-    croppedCanvas.height = pixelCrop.height
-  
-    // Draw the cropped image onto the new canvas
-    croppedCtx.drawImage(
+  }
+
+  // Set the size of the cropped canvas
+  croppedCanvas.width = pixelCrop.width
+  croppedCanvas.height = pixelCrop.height
+
+  // Draw the cropped image onto the new canvas
+  croppedCtx.drawImage(
       canvas,
       pixelCrop.x,
       pixelCrop.y,
@@ -89,19 +135,16 @@ export  const getCroppedImg = async (config: cropperUtilsConfig
       0,
       pixelCrop.width,
       pixelCrop.height
-    )
-  
-    // As Base64 string
-    // return croppedCanvas.toDataURL('image/jpeg');
-  
-    // As a blob
-    return new Promise<string>((resolve, reject) => {
-        croppedCanvas.toBlob((file) => {
+  )
+
+  // As a blob
+  return new Promise<string>((resolve, reject) => {
+      croppedCanvas.toBlob((file) => {
           if (file !== null) {
-            resolve(URL.createObjectURL(file));
+              resolve(URL.createObjectURL(file));
           } else {
-            reject(new Error("Failed to create blob from image"));
+              reject(new Error("Failed to create blob from image"));
           }
-        }, 'image/jpeg');
-      });
-  }
+      }, 'image/jpeg');
+  });
+}

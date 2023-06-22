@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageCropper from "../components/ImageCropper";
 import {
   BiX,
@@ -16,6 +16,8 @@ interface MagazinPagesProps {
 }
 
 const CropperDialog: React.FC<MagazinPagesProps> = ({ closeButtonFalse }) => {
+  const [deleteImg, setDeleteImg] = useState(false);
+  const [showCroppedImage, setShowCroppedImage] = useState(false);
   return (
     <div className="w-[550px] h-[600px] bg-whiteText rounded-lg">
       <div className="flex px-4 py-4 justify-end">
@@ -42,8 +44,13 @@ const CropperDialog: React.FC<MagazinPagesProps> = ({ closeButtonFalse }) => {
           </button>
         </div>
       </div>
-      <div className="h-[309px] my-3 bg-cropperBg">
-        <ImageCropper />
+      <div className="relative h-[309px] my-3 bg-cropperBg">
+        <ImageCropper
+          deleteImg={deleteImg}
+          setDeleteImg={setDeleteImg}
+          saveCroppedImage={showCroppedImage}
+          setShowCroppedImage={setShowCroppedImage}
+        />
       </div>
       <div className="bg-redPrimery">
         <button className="border-2 border-gray rounded-md active:bg-braunPrimery">
@@ -55,10 +62,16 @@ const CropperDialog: React.FC<MagazinPagesProps> = ({ closeButtonFalse }) => {
         </button>
       </div>
       <div className="flex justify-between mt-6 px-14">
-        <button className="px-[20px] py-[4px] border-[3px] border-redPrimery rounded-md font-bold text-text active:bg-redPrimery active:text-whiteText">
+        <button
+          onClick={() => setDeleteImg(true)}
+          className="px-[20px] py-[4px] border-[3px] border-redPrimery rounded-md font-bold text-text active:bg-redPrimery active:text-whiteText"
+        >
           Löschen
         </button>
-        <button className="px-[20px] py-[4px] border-[3px] border-bgreenPrimery rounded-md font-bold text-text active:bg-bgreenPrimery active:text-whiteText">
+        <button
+          onClick={() => setShowCroppedImage(true)}
+          className="px-[20px] py-[4px] border-[3px] border-bgreenPrimery rounded-md font-bold text-text active:bg-bgreenPrimery active:text-whiteText"
+        >
           Speichern
         </button>
       </div>
