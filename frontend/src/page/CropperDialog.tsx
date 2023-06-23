@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ImageCropper from "../components/ImageCropper";
+import { CropperContext } from "../context/cropperContext";
 import {
   BiX,
   BiExpand,
@@ -11,17 +12,19 @@ import {
   BiZoomOut,
 } from "react-icons/bi";
 
-interface MagazinPagesProps {
-  closeButtonFalse: () => void;
-}
-
-const CropperDialog: React.FC<MagazinPagesProps> = ({ closeButtonFalse }) => {
+const CropperDialog = () => {
   const [deleteImg, setDeleteImg] = useState(false);
   const [showCroppedImage, setShowCroppedImage] = useState(false);
+  const { setIsDialogVisible } = useContext(CropperContext);
+
+  const saveBtn = () => {
+    setShowCroppedImage(true);
+    setIsDialogVisible(false);
+  };
   return (
     <div className="w-[550px] h-[600px] bg-whiteText rounded-lg">
       <div className="flex px-4 py-4 justify-end">
-        <button onClick={closeButtonFalse}>
+        <button onClick={() => setIsDialogVisible(false)}>
           <BiX size={37} />
         </button>
       </div>
@@ -69,7 +72,7 @@ const CropperDialog: React.FC<MagazinPagesProps> = ({ closeButtonFalse }) => {
           Löschen
         </button>
         <button
-          onClick={() => setShowCroppedImage(true)}
+          onClick={saveBtn}
           className="px-[20px] py-[4px] border-[3px] border-bgreenPrimery rounded-md font-bold text-text active:bg-bgreenPrimery active:text-whiteText"
         >
           Speichern

@@ -1,21 +1,14 @@
 import { BiArrowBack, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { ButtonSave } from "../components/ButtonsComponent";
-import { useState } from "react";
+import { useContext } from "react";
 import MagazinPages from "../components/MagazinPages";
 import CropperDialog from "./CropperDialog";
+import { CropperContext } from "../context/cropperContext";
 
 function Magazin() {
-  const [currentPage, setCurrentPage] = useState(1);
   const pages = Array.from({ length: 60 }, (_, i) => i + 1);
-  const [isDialogVisible, setIsDialogVisible] = useState(false);
-
-  const openButtonClick = () => {
-    setIsDialogVisible(true);
-  };
-
-  const closeButtonClick = () => {
-    setIsDialogVisible(false);
-  };
+  const { isDialogVisible, currentPage, setCurrentPage } =
+    useContext(CropperContext);
 
   return (
     <>
@@ -30,10 +23,7 @@ function Magazin() {
           </div>
         </div>
         <div className="flex h-[408px] justify-center items-center rounded-lg bg-gray">
-          <MagazinPages
-            pageNumber={currentPage}
-            openButtonTrue={openButtonClick}
-          />
+          <MagazinPages />
         </div>
         <div className="flex mt-4 space-x-4">
           <div>
@@ -73,7 +63,7 @@ function Magazin() {
       </div>
       {isDialogVisible && (
         <div className="flex absolute h-full w-screen justify-center items-center bg-braunPrimery">
-          <CropperDialog closeButtonFalse={closeButtonClick} />
+          <CropperDialog />
         </div>
       )}
     </>

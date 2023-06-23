@@ -7,29 +7,22 @@ interface ImagesModule {
   [key: string]: string;
 }
 
-interface MagazinPagesProps {
-  pageNumber: number;
-  openButtonTrue: () => void;
-}
-
 interface ButtonConfig {
   cssClass: string;
 }
 
 const pageImg = imagesModule as ImagesModule;
 
-const MagazinPages: React.FC<MagazinPagesProps> = ({
-  pageNumber,
-  openButtonTrue,
-}) => {
+const MagazinPages = () => {
   const [currentImage1, setCurrentImage1] = useState(pageImg.pageImg1);
   const [currentImage2, setCurrentImage2] = useState(pageImg.pageImg2);
-  const { croppedImgUrl } = useContext(CropperContext);
+  const { croppedImgUrl, setIsDialogVisible, currentPage } =
+    useContext(CropperContext);
 
   useEffect(() => {
-    setCurrentImage1(pageImg[`pageImg${pageNumber}`]);
-    setCurrentImage2(pageImg[`pageImg${pageNumber + 1}`]);
-  }, [pageNumber]);
+    setCurrentImage1(pageImg[`pageImg${currentPage}`]);
+    setCurrentImage2(pageImg[`pageImg${currentPage + 1}`]);
+  }, [currentPage]);
 
   const renderButtons = (page: number) => {
     const buttonsConfig = buttonsPerPage[page] || [];
@@ -39,7 +32,7 @@ const MagazinPages: React.FC<MagazinPagesProps> = ({
           <button
             className={config.cssClass}
             key={index}
-            onClick={openButtonTrue}
+            onClick={() => setIsDialogVisible(true)}
           >
             <div className="flex flex-col justify-center items-center rounded-md font-bold text-gray p-1 bg-whiteText bg-opacity-30 ">
               Foto
@@ -58,11 +51,11 @@ const MagazinPages: React.FC<MagazinPagesProps> = ({
     <div className="relative flex space-x-4">
       <div className="w-60">
         <img src={currentImage1} alt="page 1" />
-        {renderButtons(pageNumber)}
+        {renderButtons(currentPage)}
       </div>
       <div className="relative w-60">
         <img src={currentImage2} alt="page 2" />
-        {renderButtons(pageNumber + 1)}
+        {renderButtons(currentPage + 1)}
       </div>
     </div>
   );

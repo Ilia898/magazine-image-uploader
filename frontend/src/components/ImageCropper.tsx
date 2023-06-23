@@ -83,7 +83,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
 
   useEffect(() => {
     showCroppedImage();
-    setShowCroppedImage(false);
+    // setShowCroppedImage(false);
   }, [saveCroppedImage]);
 
   return (
