@@ -62,7 +62,7 @@ function Magazin() {
         </div>
       </div>
       {isDialogVisible && (
-        <div className="flex absolute h-full w-screen justify-center items-center bg-braunPrimery">
+        <div className="flex absolute h-full w-screen justify-center items-center bg-text bg-opacity-90 ">
           <CropperDialog />
         </div>
       )}

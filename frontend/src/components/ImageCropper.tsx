@@ -1,7 +1,14 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../functions/cropperUtils";
 import { CropperContext } from "../context/cropperContext";
+import { BiCloudUpload } from "react-icons/bi";
 
 interface CroppedArea {
   x: number;
@@ -16,6 +23,7 @@ const ImageCropper = () => {
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const fileInput = useRef<HTMLInputElement | null>(null);
   const {
     setCroppedImgUrl,
     showCroppedImage,
@@ -78,6 +86,12 @@ const ImageCropper = () => {
     setDeleteImg(false);
   }, [deleteImg, setDeleteImg]);
 
+  const onButtonClick = () => {
+    if (fileInput.current) {
+      fileInput.current.click();
+    }
+  };
+
   return (
     <div>
       {imageSrc ? (
@@ -97,7 +111,23 @@ const ImageCropper = () => {
           </div>
         </>
       ) : (
-        <input type="file" onChange={onFileChange} accept="image/*" />
+        <div className="flex h-[309px] justify-center items-center">
+          <button
+            onClick={onButtonClick}
+            className="flex w-[180px] justify-center items-center border-b-2 border-text rounded-md font-bold text-whiteText p-1 bg-braunPrimery hover:border-2"
+          >
+            <BiCloudUpload size={30} />
+            Foto hochladen
+          </button>
+
+          <input
+            type="file"
+            ref={fileInput}
+            onChange={onFileChange}
+            accept="image/*"
+            className="hidden"
+          />
+        </div>
       )}
     </div>
   );
