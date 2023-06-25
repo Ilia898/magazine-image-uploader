@@ -13,9 +13,13 @@ import {
 } from "react-icons/bi";
 
 const CropperDialog = () => {
-  const [deleteImg, setDeleteImg] = useState(false);
-  const [showCroppedImage, setShowCroppedImage] = useState(false);
-  const { setIsDialogVisible } = useContext(CropperContext);
+  const {
+    setIsDialogVisible,
+    setShowCroppedImage,
+    setDeleteImg,
+    setZoom,
+    zoom,
+  } = useContext(CropperContext);
 
   const saveBtn = () => {
     setShowCroppedImage(true);
@@ -42,25 +46,29 @@ const CropperDialog = () => {
           <button className="border-2 border-gray rounded-md active:bg-braunPrimery">
             <BiUpArrowAlt size={25} />
           </button>
-          <button className="border-2 border-gray rounded-md active:bg-braunPrimery">
+          <button
+            onClick={() => setZoom(1)}
+            className="border-2 border-gray rounded-md active:bg-braunPrimery"
+          >
             <BiExpand size={25} />
           </button>
         </div>
       </div>
       <div className="relative h-[309px] my-3 bg-cropperBg">
-        <ImageCropper
-          deleteImg={deleteImg}
-          setDeleteImg={setDeleteImg}
-          saveCroppedImage={showCroppedImage}
-          setShowCroppedImage={setShowCroppedImage}
-        />
+        <ImageCropper />
       </div>
       <div className="bg-redPrimery">
-        <button className="border-2 border-gray rounded-md active:bg-braunPrimery">
+        <button
+          onClick={() => setZoom(zoom + 1)}
+          className="border-2 border-gray rounded-md active:bg-braunPrimery"
+        >
           <BiZoomOut size={25} />
         </button>
         sleider
-        <button className="border-2 border-gray rounded-md active:bg-braunPrimery">
+        <button
+          onClick={() => setZoom((zoom) => Math.max(zoom - 1, 1))}
+          className="border-2 border-gray rounded-md active:bg-braunPrimery"
+        >
           <BiZoomIn size={25} />
         </button>
       </div>

@@ -8,5 +8,11 @@ export interface cropperContextType{
   isDialogVisible:boolean
   setIsDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  showCroppedImage: boolean;
+  setShowCroppedImage: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteImg: boolean;
+  setDeleteImg: React.Dispatch<React.SetStateAction<boolean>>;
+  zoom: number;
+  setZoom: React.Dispatch<React.SetStateAction<number>>;
 }

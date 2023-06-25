@@ -10,26 +10,20 @@ interface CroppedArea {
   height: number;
 }
 
-interface ImageCropperProps {
-  deleteImg: boolean;
-  saveCroppedImage: boolean;
-  setDeleteImg: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowCroppedImage: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ImageCropper: React.FC<ImageCropperProps> = ({
-  deleteImg,
-  setDeleteImg,
-  saveCroppedImage,
-  setShowCroppedImage,
-}) => {
+const ImageCropper = () => {
   const [imageSrc, setImageSrc] = React.useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
-  const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
-  const { setCroppedImgUrl } = useContext(CropperContext);
+  const {
+    setCroppedImgUrl,
+    showCroppedImage,
+    deleteImg,
+    setDeleteImg,
+    zoom,
+    setZoom,
+  } = useContext(CropperContext);
 
   const onCropComplete = useCallback(
     (croppedArea: CroppedArea, croppedAreaPixels: any) => {
@@ -38,7 +32,7 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     []
   );
 
-  const showCroppedImage = useCallback(async () => {
+  const callCroppedImage = useCallback(async () => {
     try {
       const croppedImage = await getCroppedImg({
         imageSrc,
@@ -50,7 +44,11 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels]);
+  }, [imageSrc, croppedAreaPixels, setCroppedImgUrl]);
+
+  useEffect(() => {
+    callCroppedImage();
+  }, [callCroppedImage, showCroppedImage]);
 
   const readFile = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -73,18 +71,12 @@ const ImageCropper: React.FC<ImageCropperProps> = ({
   const onClose = useCallback(() => {
     setCroppedImage(null);
     setImageSrc(null);
-    console.log(setCroppedImage);
   }, []);
 
   useEffect(() => {
     onClose();
     setDeleteImg(false);
   }, [deleteImg, setDeleteImg]);
-
-  useEffect(() => {
-    showCroppedImage();
-    // setShowCroppedImage(false);
-  }, [saveCroppedImage]);
 
   return (
     <div>

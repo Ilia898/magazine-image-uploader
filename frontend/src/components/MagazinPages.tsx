@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import * as imagesModule from "../assets/magazinpage/images";
 import { buttonsPerPage } from "../functions/imageCropButton";
 import { CropperContext } from "../context/cropperContext";
+import { BsTrash3 } from "react-icons/bs";
 
 interface ImagesModule {
   [key: string]: string;
@@ -16,7 +17,8 @@ const pageImg = imagesModule as ImagesModule;
 const MagazinPages = () => {
   const [currentImage1, setCurrentImage1] = useState(pageImg.pageImg1);
   const [currentImage2, setCurrentImage2] = useState(pageImg.pageImg2);
-  const { croppedImgUrl, setIsDialogVisible, currentPage } =
+  const [isHovered, setIsHovered] = useState(false);
+  const { croppedImgUrl, setIsDialogVisible, currentPage, setCroppedImgUrl } =
     useContext(CropperContext);
 
   useEffect(() => {
@@ -26,6 +28,14 @@ const MagazinPages = () => {
 
   const renderButtons = (page: number) => {
     const buttonsConfig = buttonsPerPage[page] || [];
+    const handleTouchStart = () => {
+      setIsHovered(true);
+    };
+
+    const handleTouchEnd = () => {
+      setIsHovered(false);
+    };
+
     return buttonsConfig.map((config: ButtonConfig, index: number) => (
       <div>
         {croppedImgUrl === null ? (
@@ -41,7 +51,27 @@ const MagazinPages = () => {
             </div>
           </button>
         ) : (
-          <img className={config.cssClass} src={croppedImgUrl} alt="" />
+          <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onMouseEnter={handleTouchStart}
+            onMouseLeave={handleTouchEnd}
+          >
+            <img className={config.cssClass} src={croppedImgUrl} alt="Image" />
+
+            <div
+              className={`${config.cssClass} opacity-0 ${
+                isHovered ? "opacity-100" : ""
+              }`}
+            >
+              <button
+                onClick={() => setCroppedImgUrl(null)}
+                className="flex ml-auto mr-2 mt-2 mb-auto p-1 shadow-md border-2 border-whiteText rounded-md text-redPrimery bg-whiteText"
+              >
+                <BsTrash3 size={20} />
+              </button>
+            </div>
+          </div>
         )}
       </div>
     ));
