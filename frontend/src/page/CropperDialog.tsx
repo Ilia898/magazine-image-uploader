@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import ImageCropper from "../components/ImageCropper";
 import { CropperContext } from "../context/cropperContext";
 import Slider from "@mui/material/Slider";
@@ -22,11 +22,18 @@ const CropperDialog = () => {
     setDeleteImg,
     setZoom,
     zoom,
+    cropImg,
+    setCropImg,
   } = useContext(CropperContext);
 
   const saveBtn = () => {
     setShowCroppedImage(true);
     setIsDialogVisible(false);
+  };
+
+  const expandBtn = () => {
+    setCropImg({ x: 0, y: 0 });
+    setZoom(1);
   };
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
@@ -52,20 +59,32 @@ const CropperDialog = () => {
       </div>
       <div className="flex justify-center">
         <div className="w-[220px] flex justify-between">
-          <button className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none">
+          <button
+            onClick={() => setCropImg({ x: cropImg.x - 10, y: cropImg.y })}
+            className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none"
+          >
             <BiLeftArrowAlt size={25} />
           </button>
-          <button className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none">
+          <button
+            onClick={() => setCropImg({ x: cropImg.x + 10, y: cropImg.y })}
+            className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none"
+          >
             <BiRightArrowAlt size={25} />
           </button>
-          <button className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none">
+          <button
+            onClick={() => setCropImg({ x: cropImg.x, y: cropImg.y + 10 })}
+            className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none"
+          >
             <BiDownArrowAlt size={25} />
           </button>
-          <button className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none">
+          <button
+            onClick={() => setCropImg({ x: cropImg.x, y: cropImg.y - 10 })}
+            className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none"
+          >
             <BiUpArrowAlt size={25} />
           </button>
           <button
-            onClick={() => setZoom(1)}
+            onClick={expandBtn}
             className="w-[40px] h-[40px] border-2 shadow-[0px_1.5px_0.5px_rgba(0,0,0,0.25)] border-bgreenPrimery rounded-md font-bold p-1 hover:shadow-none"
           >
             <BiExpand size={25} />

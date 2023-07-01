@@ -1,5 +1,9 @@
 import { createContext, useEffect, useState } from "react";
-import { cropperContextType, cropperChildrenType } from "../utils/config";
+import {
+  cropperContextType,
+  cropperChildrenType,
+  CroppedArea,
+} from "../utils/config";
 
 export const CropperContext = createContext<cropperContextType>({
   croppedImgUrl: null,
@@ -26,6 +30,20 @@ export const CropperContext = createContext<cropperContextType>({
   setZoom: () => {
     1;
   },
+  cropImg: { x: 0, y: 0 },
+  setCropImg: () => ({ x: 0, y: 0 }),
+  imageSrc: null,
+  setImageSrc: () => {
+    null;
+  },
+  croppedAreaPixels: null,
+  setCroppedAreaPixels: () => {
+    null;
+  },
+  croppedImage: null,
+  setCroppedImage: () => {
+    null;
+  },
 });
 
 export function CropperContextProvider({ children }: cropperChildrenType) {
@@ -35,6 +53,11 @@ export function CropperContextProvider({ children }: cropperChildrenType) {
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteImg, setDeleteImg] = useState(false);
   const [zoom, setZoom] = useState(1);
+  const [cropImg, setCropImg] = useState({ x: 0, y: 0 });
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] =
+    useState<CroppedArea | null>(null);
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
 
   useEffect(() => {
     console.log("esaris  :", croppedImgUrl);
@@ -54,6 +77,14 @@ export function CropperContextProvider({ children }: cropperChildrenType) {
         setDeleteImg,
         zoom,
         setZoom,
+        cropImg,
+        setCropImg,
+        imageSrc,
+        setImageSrc,
+        croppedAreaPixels,
+        setCroppedAreaPixels,
+        croppedImage,
+        setCroppedImage,
       }}
     >
       {children}

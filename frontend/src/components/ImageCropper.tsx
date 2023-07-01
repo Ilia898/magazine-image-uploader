@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useEffect, useRef } from "react";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../functions/cropperUtils";
 import { CropperContext } from "../context/cropperContext";
@@ -18,11 +12,6 @@ interface CroppedArea {
 }
 
 const ImageCropper = () => {
-  const [imageSrc, setImageSrc] = React.useState<string | null>(null);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [rotation, setRotation] = useState(0);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
   const {
     setCroppedImgUrl,
@@ -31,13 +20,20 @@ const ImageCropper = () => {
     setDeleteImg,
     zoom,
     setZoom,
+    cropImg,
+    setCropImg,
+    imageSrc,
+    setImageSrc,
+    croppedAreaPixels,
+    setCroppedAreaPixels,
+    setCroppedImage,
   } = useContext(CropperContext);
 
   const onCropComplete = useCallback(
-    (croppedArea: CroppedArea, croppedAreaPixels: any) => {
+    (_croppedArea: CroppedArea, croppedAreaPixels: CroppedArea) => {
       setCroppedAreaPixels(croppedAreaPixels);
     },
-    []
+    [setCroppedAreaPixels]
   );
 
   const callCroppedImage = useCallback(async () => {
@@ -52,7 +48,7 @@ const ImageCropper = () => {
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, setCroppedImgUrl]);
+  }, [imageSrc, croppedAreaPixels, setCroppedImage, setCroppedImgUrl]);
 
   useEffect(() => {
     callCroppedImage();
@@ -79,12 +75,12 @@ const ImageCropper = () => {
   const onClose = useCallback(() => {
     setCroppedImage(null);
     setImageSrc(null);
-  }, []);
+  }, [setCroppedImage, setImageSrc]);
 
   useEffect(() => {
     onClose();
     setDeleteImg(false);
-  }, [deleteImg, setDeleteImg]);
+  }, [deleteImg, onClose, setDeleteImg]);
 
   const onButtonClick = () => {
     if (fileInput.current) {
@@ -99,12 +95,10 @@ const ImageCropper = () => {
           <div className="">
             <Cropper
               image={imageSrc}
-              crop={crop}
-              rotation={rotation}
+              crop={cropImg}
               zoom={zoom}
               aspect={4 / 3}
-              onCropChange={setCrop}
-              onRotationChange={setRotation}
+              onCropChange={setCropImg}
               onCropComplete={onCropComplete}
               onZoomChange={setZoom}
             />

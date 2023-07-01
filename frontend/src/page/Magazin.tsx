@@ -7,8 +7,7 @@ import { CropperContext } from "../context/cropperContext";
 
 function Magazin() {
   const pages = Array.from({ length: 60 }, (_, i) => i + 1);
-  const { isDialogVisible, currentPage, setCurrentPage } =
-    useContext(CropperContext);
+  const { isDialogVisible, setCurrentPage } = useContext(CropperContext);
 
   return (
     <>
