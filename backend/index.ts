@@ -1,8 +1,7 @@
 import express from "express";
 import { PORT, MONGODB_URL } from "./utils/envConfig";
 import mongoose from "mongoose";
-
-const app = express();
+import router from "./routes/mzRoutes";
 
 mongoose
   .connect(MONGODB_URL!)
@@ -11,9 +10,8 @@ mongoose
   console.error("Error connecting to MongoDB:", error.message)
 );
 
+const app = express();
+app.use(router)
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 app.listen(PORT, () => console.log(`port ${PORT} started`));

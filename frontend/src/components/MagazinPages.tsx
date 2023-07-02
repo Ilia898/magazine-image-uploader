@@ -18,13 +18,23 @@ const MagazinPages = () => {
   const [currentImage1, setCurrentImage1] = useState(pageImg.pageImg1);
   const [currentImage2, setCurrentImage2] = useState(pageImg.pageImg2);
   const [isHovered, setIsHovered] = useState(false);
-  const { croppedImgUrl, setIsDialogVisible, currentPage, setCroppedImgUrl } =
-    useContext(CropperContext);
+  const {
+    croppedImgUrl,
+    setIsDialogVisible,
+    currentPage,
+    setCroppedImgUrl,
+    setImgId,
+  } = useContext(CropperContext);
 
   useEffect(() => {
     setCurrentImage1(pageImg[`pageImg${currentPage}`]);
     setCurrentImage2(pageImg[`pageImg${currentPage + 1}`]);
   }, [currentPage]);
+
+  const clickBtn = (id: number) => {
+    setImgId(id);
+    setIsDialogVisible(true);
+  };
 
   const renderButtons = (page: number) => {
     const buttonsConfig = buttonsPerPage[page] || [];
@@ -37,12 +47,12 @@ const MagazinPages = () => {
     };
 
     return buttonsConfig.map((config: ButtonConfig, index: number) => (
-      <div>
+      <div key={index}>
         {croppedImgUrl === null ? (
           <button
             className={config.cssClass}
             key={index}
-            onClick={() => setIsDialogVisible(true)}
+            onClick={() => clickBtn(index)}
           >
             <div className="flex flex-col justify-center items-center rounded-md font-bold text-gray p-1 bg-whiteText bg-opacity-30 ">
               Foto

@@ -30,4 +30,6 @@ export interface cropperContextType{
   setCroppedAreaPixels: React.Dispatch<React.SetStateAction<CroppedArea | null>>
   croppedImage: string | null;
   setCroppedImage: React.Dispatch<React.SetStateAction<string | null>>;
+  imgId: number | null;
+  setImgId: React.Dispatch<React.SetStateAction<number | null>>;
 }

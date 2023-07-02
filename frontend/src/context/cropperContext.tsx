@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   cropperContextType,
   cropperChildrenType,
@@ -44,6 +45,11 @@ export const CropperContext = createContext<cropperContextType>({
   setCroppedImage: () => {
     null;
   },
+
+  imgId: null,
+  setImgId: () => {
+    null;
+  },
 });
 
 export function CropperContextProvider({ children }: cropperChildrenType) {
@@ -58,10 +64,32 @@ export function CropperContextProvider({ children }: cropperChildrenType) {
   const [croppedAreaPixels, setCroppedAreaPixels] =
     useState<CroppedArea | null>(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [imgId, setImgId] = useState<number | null>(null);
 
   useEffect(() => {
+    axios
+      .post("/user/upload/image", {
+        currentPage,
+        imgId,
+        croppedImgUrl,
+      })
+      .then((response) => {
+        console.log("Data uploaded successfully:", response.data);
+      })
+      .catch((error) => {
+        console.log("Error in uploading data:", error);
+      });
+    console.log(
+      "gverdi :",
+      currentPage,
+      " suratis iD :",
+      imgId,
+      " url-blob :",
+      croppedImgUrl
+    );
     console.log("esaris  :", croppedImgUrl);
   }, [croppedImgUrl]);
+
   return (
     <CropperContext.Provider
       value={{
@@ -85,6 +113,8 @@ export function CropperContextProvider({ children }: cropperChildrenType) {
         setCroppedAreaPixels,
         croppedImage,
         setCroppedImage,
+        imgId,
+        setImgId,
       }}
     >
       {children}

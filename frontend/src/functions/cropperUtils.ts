@@ -136,6 +136,8 @@ export const getCroppedImg = async (config: cropperUtilsConfig): Promise<string 
       pixelCrop.width,
       pixelCrop.height
   )
+  // As Base64 string
+  // return croppedCanvas.toDataURL('image/jpeg');
 
   // As a blob
   return new Promise<string>((resolve, reject) => {
